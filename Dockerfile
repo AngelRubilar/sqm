@@ -1,20 +1,25 @@
-# Usa una imagen base de Node.js
-FROM node:18
+FROM debian:stable-slim
 
-# Establece el directorio de trabajo en el contenedor
+# Instala dependencias básicas y Bun 1.2
+RUN apt-get update && \
+    apt-get install -y curl && \
+    curl -fsSL https://bun.sh/install | bash
+
+# Agrega Bun al PATH
+ENV PATH="/root/.bun/bin:$PATH"
+
+# Define el directorio de trabajo
 WORKDIR /usr/src/app
 
-# Copia el archivo package.json y package-lock.json
+# Copia e instala dependencias con Bun
 COPY package*.json ./
+RUN bun install
 
-# Instala las dependencias
-RUN npm install
-
-# Copia el resto de los archivos de la aplicación
+# Copia el resto de la aplicación
 COPY src ./src
 
-# Expone el puerto en el que la aplicación se ejecutará
+# Expone el puerto
 EXPOSE 3000
 
-# Comando para ejecutar la aplicación
-CMD ["node", "src/app.js"]
+# Ejecuta la aplicación con Bun
+CMD ["bun", "src/app.ts"]
