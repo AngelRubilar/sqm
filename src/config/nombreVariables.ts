@@ -1,4 +1,4 @@
-module.exports = {
+export const nombreVariables: Record<string, string> = {
   "Batt_Volt_Min": "Batt_Volt_Min",
   "CO": "CO",
   "CO_PPMV_HUARA_MIN": "CO",
@@ -27,7 +27,7 @@ module.exports = {
   "NO_PPBV_EXOFVICTORIA_MIN": "NO",
   "NO_PPBV_COLPINTADOS_MIN": "NO",
   "NO2": "NO2",
-  "NOX_PPBV_HUARA_MIN":"NO2",
+  "NOX_PPBV_HUARA_MIN": "NO2",
   "NOX_PPBV_EXOFVICTORIA_MIN": "NO2",
   "NOX_PPBV_COLPINTADOS_MIN": "NO2",
   "O3": "O3",
@@ -48,7 +48,7 @@ module.exports = {
   "SO2_PPBV_EXOFVICTORIA_MIN": "SO2",
   "SO2_PPBV_COLPINTADOS_MIN": "SO2",
   "Suministro": "Suministro",
-  "TEMPERATURA_C_HUARA_MIN":"Temperatura",
+  "TEMPERATURA_C_HUARA_MIN": "Temperatura",
   "TEMPERATURA_C_EXOFVICTORIA_MIN": "Temperatura",
   "TEMPERATURA_C_COLPINTADOS_MIN": "Temperatura",
   "Temperatura_Ambiente": "Temp_A",
@@ -58,10 +58,12 @@ module.exports = {
   "Velocidad_Viento": "VV",
   "VELV": "VV",
   "Velocidad del Viento": "VV",
-  "VELOCIDAD_DEL_VIENTO_M/S_HUARA_MIN": 'VV',
+  "VELOCIDAD_DEL_VIENTO_M/S_HUARA_MIN": "VV",
   "VELOCIDAD_DEL_VIENTO_M/S_EXOFVICTORIA_MIN": "VV",
-  "HUMEDAD_PORCENTAJE_HUARA_MIN":"HP",
-  "HUMEDAD_PORCENTAJE_EXOFVICTORIA_MIN":"HP",
-  "HUMEDAD_PORCENTAJE_COLPINTADOS_MIN":"HP",
-  "PLUVIOMETRO_MM_HUARA_MIN":"pluviometro"
+  "HUMEDAD_PORCENTAJE_HUARA_MIN": "HP",
+  "HUMEDAD_PORCENTAJE_EXOFVICTORIA_MIN": "HP",
+  "HUMEDAD_PORCENTAJE_COLPINTADOS_MIN": "HP",
+  "PLUVIOMETRO_MM_HUARA_MIN": "pluviometro"
 };
+
+export default nombreVariables;

@@ -1,6 +1,7 @@
 # Node modules
 /node_modules/
-
+# Ignorar el archivo .env para evitar incluirlo en el repositorio
+.env
 # IDEs and editors
 .vscode/
 .idea/

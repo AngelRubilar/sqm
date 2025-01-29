@@ -1,33 +1,33 @@
-const express = require('express');
-const pool = require('./db'); // Importar la configuración de la base de datos
-const { realizarConsulta } = require('./serpram/serpram'); // Importar la función realizarConsulta
-const { obtenerDatos } = require('./esinfa/esinfa'); // Importar la función obtenerDatos
-const { obtenerDatosParaTodosLosTags } = require('./ayt/ayt'); // Importar la función obtenerDatosParaTodosLosTags
-const { moverDatosHistoricos } = require('./traspaso'); // Importar la función moverDatosHistoricos
-const moment = require('moment'); // Importar la biblioteca moment
+import express, { Request, Response } from 'express';
+import { pool } from './db';
+import { realizarConsulta } from './serpram/serpram';
+import { obtenerDatos } from './esinfa/esinfa';
+import { obtenerDatosParaTodosLosTags } from './ayt/ayt';
+import { moverDatosHistoricos } from './traspaso';
+
 const app = express();
-const port = 3000; // Puedes cambiar el puerto si es necesario
+const port = 3000;
 
 // Middleware para parsear JSON
 app.use(express.json());
 
 // Ruta para obtener todos los datos de la tabla
-app.get('/api/datos', async (req, res) => {
+app.get('/api/datos', async (req: Request, res: Response) => {
   try {
     const connection = await pool.getConnection();
     const fechaLimite = moment().tz('America/Santiago').subtract(7, 'days').format('YYYY-MM-DD HH:mm:ss');
     const [rows] = await connection.query('SELECT * FROM datos WHERE timestamp >= ?', [fechaLimite]);
     connection.release();
-    console.log('Datos obtenidos:', rows); // Imprimir los resultados de la consulta
+    console.log('Datos obtenidos:', rows);
     res.json(rows);
   } catch (error) {
-    console.error('Error al obtener los datos:', error.message);
-    res.status(500).send(`Error al obtener los datos: ${error.message}`);
+    console.error('Error al obtener los datos:', error instanceof Error ? error.message : String(error));
+    res.status(500).send(`Error al obtener los datos: ${error instanceof Error ? error.message : String(error)}`);
   }
 });
 
 // Nuevo endpoint para obtener datos solo del pm10
-app.get('/api/datos-PM10', async (req, res) => {
+app.get('/api/datos-PM10', async (req: Request, res: Response) => {
   try {
     const connection = await pool.getConnection();
     const fechaLimite = moment().tz('America/Santiago').subtract(7, 'days').format('YYYY-MM-DD HH:mm:ss');
@@ -37,8 +37,8 @@ app.get('/api/datos-PM10', async (req, res) => {
     connection.release();
     res.json(rows);
   } catch (error) {
-    console.error('Error al obtener los datos de PM10:', error.message);
-    res.status(500).send(`Error al obtener los datos de PM10: ${error.message}`);
+    console.error('Error al obtener los datos de PM10:', error instanceof Error ? error.message : String(error));
+    res.status(500).send(`Error al obtener los datos de PM10: ${error instanceof Error ? error.message : String(error)}`);
   }
 });
 
@@ -46,7 +46,6 @@ app.get('/api/datos-PM10', async (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
 });
-
 
 // Ejecutar las consultas automáticamente cada minuto
 setInterval(() => {
